@@ -1,0 +1,34 @@
+{
+    "name": "maleficarum/http-response",
+    "description": "Maleficarum HTTP response component",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.0",
+        "ext-phalcon": ">=3.0",
+        "maleficarum/profiler": "^2.0",
+        "maleficarum/config": "^2.0",
+        "maleficarum/response": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Maleficarum\\Response\\Http\\": "src/Response/Http/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:pharaun13/maleficarum-profiler.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:pharaun13/maleficarum-config.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:pharaun13/maleficarum-response.git"
+        }
+    ]
+}
