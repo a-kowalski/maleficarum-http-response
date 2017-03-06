@@ -47,7 +47,7 @@ class Response extends \Maleficarum\Response\AbstractResponse
      */
     public function render(...$arguments) : \Maleficarum\Response\AbstractResponse {
         // forward render action to the handler
-        call_user_func_array([$this->handler, 'render'], $arguments);
+        call_user_func_array([$this->handler, 'handle'], $arguments);
 
         return $this;
     }

@@ -45,7 +45,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
             ->getMockForAbstractClass();
         $handler
             ->expects($this->once())
-            ->method('render')
+            ->method('handle')
             ->with(
                 $this->equalTo('foo'),
                 $this->equalTo('bar')
