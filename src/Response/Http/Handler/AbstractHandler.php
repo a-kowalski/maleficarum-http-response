@@ -14,6 +14,36 @@ abstract class AbstractHandler
      */
     protected $body;
 
+    /**
+     * Internal storage for response plugins that will add data the response.
+     * 
+     * @var array
+     */
+    protected $plugins = [];
+    
+    /**
+     * Add new closure plugin.
+     * 
+     * @param string   $name
+     * @param \Closure $plugin
+     * @return \Maleficarum\Response\Http\Handler\AbstractHandler
+     */
+    public function addPlugin(string $name, \Closure $plugin) : \Maleficarum\Response\Http\Handler\AbstractHandler {
+        $this->plugins[$name] = $plugin;
+        return $this;
+    }
+    
+    /**
+     * Remove existing closure plugin.
+     * 
+     * @param string   $name
+     * @return AbstractHandler
+     */
+    public function removePlugin(string $name) : \Maleficarum\Response\Http\Handler\AbstractHandler {
+        unset($this->plugins[$name]);
+        return $this;
+    }
+    
     /* ------------------------------------ Abstract methods START ------------------------------------- */
     /**
      * Handle response

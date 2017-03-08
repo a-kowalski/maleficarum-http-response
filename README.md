@@ -1,6 +1,13 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
+## [2.0.0] - 2017-03-08
+### Changed
+- Removed Config and Profiler dependencies from JSON Handler
+
+## Added
+- Added support for response plugins that can be assigned as closures. 
+
 ## [1.0.1] - 2017-03-06
 ### Fixed
 - Fix render method forward
