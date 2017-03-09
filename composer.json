@@ -5,8 +5,6 @@
     "require": {
         "php": ">=7.0",
         "ext-phalcon": ">=3.0",
-        "maleficarum/profiler": "^2.0",
-        "maleficarum/config": "^2.0",
         "maleficarum/response": "^3.0"
     },
     "require-dev": {
@@ -18,14 +16,6 @@
         }
     },
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:pharaun13/maleficarum-profiler.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:pharaun13/maleficarum-config.git"
-        },
         {
             "type": "vcs",
             "url": "git@github.com:pharaun13/maleficarum-response.git"
