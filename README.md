@@ -1,7 +1,7 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
-## [2.0.0] - 2017-03-09
+## [2.0.1] - 2017-03-09
 ### Changed
 - Removed unnecessary dependencies from composer.json.
 
