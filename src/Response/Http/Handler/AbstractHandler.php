@@ -2,11 +2,14 @@
 /**
  * This class is a base for all handler classes
  */
+declare (strict_types=1);
 
 namespace Maleficarum\Response\Http\Handler;
 
-abstract class AbstractHandler
-{
+abstract class AbstractHandler {
+    
+    /* ------------------------------------ Class Property START --------------------------------------- */
+    
     /**
      * Internal storage for response body
      *
@@ -20,6 +23,10 @@ abstract class AbstractHandler
      * @var array
      */
     protected $plugins = [];
+
+    /* ------------------------------------ Class Property END ----------------------------------------- */
+    
+    /* ------------------------------------ Class Methods START ---------------------------------------- */
     
     /**
      * Add new closure plugin.
@@ -44,7 +51,10 @@ abstract class AbstractHandler
         return $this;
     }
     
+    /* ------------------------------------ Class Methods END ------------------------------------------ */
+    
     /* ------------------------------------ Abstract methods START ------------------------------------- */
+    
     /**
      * Handle response
      *
@@ -58,9 +68,11 @@ abstract class AbstractHandler
      * @return string
      */
     abstract public function getContentType() : string;
+    
     /* ------------------------------------ Abstract methods END --------------------------------------- */
 
     /* ------------------------------------ Setters & Getters START ------------------------------------ */
+    
     /**
      * Get response body
      *
@@ -69,5 +81,6 @@ abstract class AbstractHandler
     public function getBody() : string {
         return $this->body;
     }
+    
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
 }

@@ -1,22 +1,17 @@
 <?php
 /**
- * This class provides functionality of handling JSON response
+ * This class provides functionality of handling JSON response.
  */
+declare (strict_types=1);
 
 namespace Maleficarum\Response\Http\Handler;
 
 class JsonHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler {
-    /* ------------------------------------ AbstractHandler methods START ------------------------------ */
+    
+    /* ------------------------------------ Class Methods START ---------------------------------------- */
+    
     /**
-     * Handle JSON response
-     *
      * @see \Maleficarum\Response\Http\Handler\AbstractHandler::handle()
-     *
-     * @param array $data
-     * @param array $meta
-     * @param bool $success
-     *
-     * @return \Maleficarum\Response\Http\Handler\AbstractHandler
      */
     public function handle(array $data = [], array $meta = [], bool $success = true) : \Maleficarum\Response\Http\Handler\AbstractHandler {
         // initialize response content
@@ -33,17 +28,16 @@ class JsonHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler {
     }
 
     /**
-     * Get response content type
-     *
      * @see \Maleficarum\Response\Http\Handler\AbstractHandler::getContentType()
-     * @return string
      */
     public function getContentType() : string {
         return 'application/json';
     }
-    /* ------------------------------------ AbstractHandler methods END -------------------------------- */
+    
+    /* ------------------------------------ Class Methods END ------------------------------------------ */
 
     /* ------------------------------------ Setters & Getters START ------------------------------------ */
+    
     /**
      * Get response body
      *
@@ -58,6 +52,7 @@ class JsonHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler {
 
         return json_encode($this->body);
     }
+    
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
 
 }

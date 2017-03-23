@@ -2,11 +2,14 @@
 /**
  * This class provides functionality of handling raw response
  */
+declare (strict_types=1);
 
 namespace Maleficarum\Response\Http\Handler;
 
-class RawHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
-{
+class RawHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler {
+    
+    /* ------------------------------------ Class Property START --------------------------------------- */
+    
     /**
      * Internal storage for response content-type
      *
@@ -14,7 +17,10 @@ class RawHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
      */
     private $contentType;
 
+    /* ------------------------------------ Class Property END ----------------------------------------- */
+    
     /* ------------------------------------ Magic methods START ---------------------------------------- */
+    
     /**
      * RawHandler constructor.
      *
@@ -23,17 +29,13 @@ class RawHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
     public function __construct(string $contentType = 'text/html') {
         $this->contentType = $contentType;
     }
+    
     /* ------------------------------------ Magic methods END ------------------------------------------ */
 
-    /* ------------------------------------ AbstractHandler methods START ------------------------------ */
+    /* ------------------------------------ Class Methods START ---------------------------------------- */
+    
     /**
-     * Handle response
-     *
      * @see \Maleficarum\Response\Http\Handler\AbstractHandler::handle()
-     *
-     * @param string $data
-     *
-     * @return \Maleficarum\Response\Http\Handler\AbstractHandler
      */
     public function handle(string $data = '') : \Maleficarum\Response\Http\Handler\AbstractHandler {
         // initialize response content
@@ -41,9 +43,11 @@ class RawHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
 
         return $this;
     }
-    /* ------------------------------------ AbstractHandler methods END -------------------------------- */
+    
+    /* ------------------------------------ Class Methods END ------------------------------------------ */
 
     /* ------------------------------------ Setters & Getters START ------------------------------------ */
+    
     /**
      * Get contentType
      *
@@ -57,7 +61,6 @@ class RawHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
      * Set contentType
      *
      * @param string $contentType
-     *
      * @return \Maleficarum\Response\Http\Handler\RawHandler
      */
     public function setContentType(string $contentType) : \Maleficarum\Response\Http\Handler\RawHandler {
@@ -65,5 +68,6 @@ class RawHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
 
         return $this;
     }
+    
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
 }

@@ -2,11 +2,14 @@
 /**
  * This class is designed to provide a list of valid HTTP status codes and mapping of such codes to RFC approved string messages.
  */
+declare (strict_types=1);
 
 namespace Maleficarum\Response\Http;
 
-class Status
-{
+class Status {
+    
+    /* ------------------------------------ Class Property START --------------------------------------- */
+    
     const STATUS_CODE_100 = 100;
     const STATUS_CODE_101 = 101;
     const STATUS_CODE_102 = 102;
@@ -135,20 +138,24 @@ class Status
         511 => 'Network Authentication Required'
     ];
 
+    /* ------------------------------------ Class Property END ----------------------------------------- */
+    
     /* ------------------------------------ Magic methods START ---------------------------------------- */
+    
     /**
      * This is a static class. Private constructor ensures that an instance of this class will not be created by accident.
      */
     private function __construct() {
     }
+    
     /* ------------------------------------ Magic methods END ------------------------------------------ */
-
+    
     /* ------------------------------------ Status methods START --------------------------------------- */
+    
     /**
      * Fetch a string status message for the provided status code.
      * 
      * @param int $code
-     *
      * @return string
      * @throws \InvalidArgumentException
      */
@@ -159,5 +166,7 @@ class Status
 
         return self::$statusMessages[$code];
     }
+    
     /* ------------------------------------ Status methods END ----------------------------------------- */
+    
 }

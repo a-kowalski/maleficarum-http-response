@@ -2,11 +2,14 @@
 /**
  * This class provides functionality of template rendering
  */
+declare (strict_types=1);
 
 namespace Maleficarum\Response\Http\Handler;
 
-class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
-{
+class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler {
+    
+    /* ------------------------------------ Class Property START --------------------------------------- */
+    
     /**
      * Internal storage for view engine object
      *
@@ -14,7 +17,10 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
      */
     private $view;
 
+    /* ------------------------------------ Class Property END ----------------------------------------- */
+
     /* ------------------------------------ Magic methods START ---------------------------------------- */
+    
     /**
      * TemplateHandler constructor.
      *
@@ -23,18 +29,13 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
     public function __construct(\Phalcon\Mvc\View\Engine\Volt $view) {
         $this->view = $view;
     }
+    
     /* ------------------------------------ Magic methods END ------------------------------------------ */
 
-    /* ------------------------------------ AbstractHandler methods START ------------------------------ */
+    /* ------------------------------------ Class Methods START ---------------------------------------- */
+    
     /**
-     * Handle response
-     *
      * @see \Maleficarum\Response\Http\Handler\AbstractHandler::handle()
-     *
-     * @param string $template
-     * @param array $data
-     *
-     * @return \Maleficarum\Response\Http\Handler\AbstractHandler
      */
     public function handle(string $template = '', array $data = []) : \Maleficarum\Response\Http\Handler\AbstractHandler {
         if (empty($template)) {
@@ -50,13 +51,11 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
     }
 
     /**
-     * Get response content type
-     *
      * @see \Maleficarum\Response\Http\Handler\AbstractHandler::getContentType()
-     * @return string
      */
     public function getContentType() : string {
         return 'text/html';
     }
+    
     /* ------------------------------------ AbstractHandler methods END -------------------------------- */
 }
