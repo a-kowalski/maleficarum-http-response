@@ -13,7 +13,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Maleficarum\\Response\\Http\\": "src/Response/Http/"
+            "Maleficarum\\Response\\Http\\": "src/Response/Http/",
+            "Maleficarum\\Response\\Initializer\\": "src/Response/Initializer/"
         }
     },
     "repositories": [
