@@ -18,7 +18,7 @@ class Initializer {
 		// load default builder if skip not requested
 		$builders = $opts['builders'] ?? [];
 		is_array($builders) or $builders = [];
-		if (isset($builders['response']['skip'])) {
+		if (!isset($builders['response']['skip'])) {
 			\Maleficarum\Ioc\Container::register('Maleficarum\Response\Http\Response', function ($dep) {
 				/** @var \Maleficarum\Response\Http\Handler\JsonHandler $responseHandler */
 				$responseHandler = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Http\Handler\JsonHandler');
