@@ -13,7 +13,7 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
     /**
      * Internal storage for view engine object
      *
-     * @var \Phalcon\Mvc\View\Engine\Volt
+     * @var \Twig_Environment
      */
     private $view;
 
@@ -24,9 +24,9 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
     /**
      * TemplateHandler constructor.
      *
-     * @param \Phalcon\Mvc\View\Engine\Volt $view
+     * @param \Twig_Environment $view
      */
-    public function __construct(\Phalcon\Mvc\View\Engine\Volt $view) {
+    public function __construct(\Twig_Environment $view) {
         $this->view = $view;
     }
     
@@ -42,10 +42,8 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
             throw new \InvalidArgumentException(sprintf('Invalid template path provided. \%s::handle()', static::class));
         }
 
-        $template = $this->view->getView()->getViewsDir() . $template . '.phtml';
-
         // initialize response content
-        $this->body = $this->view->render($template, $data);
+        $this->body = $this->view->render($template . '.html', $data);
 
         return $this;
     }

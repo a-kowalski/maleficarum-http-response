@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
+## [4.0.0] - 2017-07-28
+### Changed
+- Replace phalcon template engine with twig
+
 ## [3.0.0] - 2017-03-23
 ### Changed
 - Changed internal structure.
