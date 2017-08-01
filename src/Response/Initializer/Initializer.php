@@ -19,10 +19,35 @@ class Initializer {
 		$builders = $opts['builders'] ?? [];
 		is_array($builders) or $builders = [];
 		if (!isset($builders['response']['skip'])) {
-			\Maleficarum\Ioc\Container::register('Maleficarum\Response\Http\Response', function ($dep) {
-				/** @var \Maleficarum\Response\Http\Handler\JsonHandler $responseHandler */
-				$responseHandler = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Http\Handler\JsonHandler');
+		    $handler = $builders['response']['handler'] ?? 'json';
 
+		    $handlerClass = 'Maleficarum\Response\Http\Handler\\';
+            switch ($handler) {
+                case 'template':
+                    $handlerClass .= 'TemplateHandler';
+                    \Maleficarum\Ioc\Container::register($handlerClass, function ($dep) {
+                        if (empty($dep['Maleficarum\Config']['templates']['directory'])) {
+                            throw new \RuntimeException('Missing templates path. \Maleficarum\Ioc\Container::get()');
+                        }
+
+                        $options = empty($dep['Maleficarum\Config']['templates']['cache_directory']) ? [] : ['cache' => $dep['Maleficarum\Config']['templates']['cache_directory']];
+                        $twigLoader = new \Twig_Loader_Filesystem($dep['Maleficarum\Config']['templates']['templates_path']);
+                        $twigEnvironment = new \Twig_Environment($twigLoader, $options);
+
+                        return new \Maleficarum\Response\Http\Handler\TemplateHandler($twigEnvironment);
+                    });
+
+                    break;
+                case 'json':
+                default:
+                    $handlerClass .= 'JsonHandler';
+                    break;
+            }
+
+            /** @var \Maleficarum\Response\Http\Handler\AbstractHandler $responseHandler */
+            $responseHandler = \Maleficarum\Ioc\Container::get($handlerClass);
+
+			\Maleficarum\Ioc\Container::register('Maleficarum\Response\Http\Response', function ($dep) use ($responseHandler) {
 				// add version plugin
 				if (isset($dep['Maleficarum\Config'])) {
 					$version = isset($dep['Maleficarum\Config']['global']['version']) ? $dep['Maleficarum\Config']['global']['version'] : null;
