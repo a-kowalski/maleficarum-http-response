@@ -7,9 +7,8 @@ declare (strict_types=1);
 namespace Maleficarum\Response\Http\Handler;
 
 class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler {
-    
     /* ------------------------------------ Class Property START --------------------------------------- */
-    
+
     /**
      * Internal storage for view engine object
      *
@@ -20,7 +19,7 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
     /* ------------------------------------ Class Property END ----------------------------------------- */
 
     /* ------------------------------------ Magic methods START ---------------------------------------- */
-    
+
     /**
      * TemplateHandler constructor.
      *
@@ -29,15 +28,15 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
     public function __construct(\Twig_Environment $view) {
         $this->view = $view;
     }
-    
+
     /* ------------------------------------ Magic methods END ------------------------------------------ */
 
     /* ------------------------------------ Class Methods START ---------------------------------------- */
-    
+
     /**
      * @see \Maleficarum\Response\Http\Handler\AbstractHandler::handle()
      */
-    public function handle(string $template = '', array $data = []) : \Maleficarum\Response\Http\Handler\AbstractHandler {
+    public function handle(string $template = '', array $data = []): \Maleficarum\Response\Http\Handler\AbstractHandler {
         if (empty($template)) {
             throw new \InvalidArgumentException(sprintf('Invalid template path provided. \%s::handle()', static::class));
         }
@@ -51,9 +50,9 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
     /**
      * @see \Maleficarum\Response\Http\Handler\AbstractHandler::getContentType()
      */
-    public function getContentType() : string {
+    public function getContentType(): string {
         return 'text/html';
     }
-    
+
     /* ------------------------------------ AbstractHandler methods END -------------------------------- */
 }

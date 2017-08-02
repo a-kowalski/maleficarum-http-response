@@ -7,9 +7,8 @@ declare (strict_types=1);
 namespace Maleficarum\Response\Http;
 
 class Response extends \Maleficarum\Response\AbstractResponse {
-    
     /* ------------------------------------ Class Property START --------------------------------------- */
-    
+
     /**
      * Internal storage for response object
      *
@@ -25,9 +24,9 @@ class Response extends \Maleficarum\Response\AbstractResponse {
     private $handler;
 
     /* ------------------------------------ Class Property END ----------------------------------------- */
-    
+
     /* ------------------------------------ Magic methods START ---------------------------------------- */
-    
+
     /**
      * Response constructor.
      *
@@ -41,18 +40,19 @@ class Response extends \Maleficarum\Response\AbstractResponse {
         // set default status code and message
         $this->setStatusCode(\Maleficarum\Response\Http\Status::STATUS_CODE_200);
     }
-    
+
     /* ------------------------------------ Magic methods END ------------------------------------------ */
-    
+
     /* ------------------------------------ Class Methods START ---------------------------------------- */
-    
+
     /**
      * Render HTTP response using currently injected handler
      *
      * @param array ...$arguments
+     *
      * @return \Maleficarum\Response\AbstractResponse
      */
-    public function render(...$arguments) : \Maleficarum\Response\AbstractResponse {
+    public function render(...$arguments): \Maleficarum\Response\AbstractResponse {
         // forward render action to the handler
         call_user_func_array([$this->handler, 'handle'], $arguments);
 
@@ -64,7 +64,7 @@ class Response extends \Maleficarum\Response\AbstractResponse {
      *
      * @return \Maleficarum\Response\AbstractResponse
      */
-    public function output() : \Maleficarum\Response\AbstractResponse {
+    public function output(): \Maleficarum\Response\AbstractResponse {
         $contentType = $this->handler->getContentType();
         $body = $this->handler->getBody();
 
@@ -87,9 +87,10 @@ class Response extends \Maleficarum\Response\AbstractResponse {
      *
      * @param string $url
      * @param bool $immediate
+     *
      * @return \Maleficarum\Response\Http\Response
      */
-    public function redirect(string $url, bool $immediate = true) : \Maleficarum\Response\Http\Response {
+    public function redirect(string $url, bool $immediate = true): \Maleficarum\Response\Http\Response {
         // send redirect header to the response object
         $this->response->redirect($url);
 
@@ -107,9 +108,10 @@ class Response extends \Maleficarum\Response\AbstractResponse {
      *
      * @param string $name
      * @param string $value
+     *
      * @return \Maleficarum\Response\Http\Response
      */
-    public function addHeader(string $name, string $value) : \Maleficarum\Response\Http\Response {
+    public function addHeader(string $name, string $value): \Maleficarum\Response\Http\Response {
         $this->response->setHeader($name, $value);
 
         return $this;
@@ -120,7 +122,7 @@ class Response extends \Maleficarum\Response\AbstractResponse {
      *
      * @return \Maleficarum\Response\Http\Response
      */
-    public function clearHeaders() : \Maleficarum\Response\Http\Response {
+    public function clearHeaders(): \Maleficarum\Response\Http\Response {
         $this->response->resetHeaders();
 
         return $this;
@@ -131,7 +133,7 @@ class Response extends \Maleficarum\Response\AbstractResponse {
      *
      * @return bool
      */
-    public function isSent() : bool {
+    public function isSent(): bool {
         return $this->response->isSent();
     }
 
@@ -139,9 +141,10 @@ class Response extends \Maleficarum\Response\AbstractResponse {
      * This method will set the current status code and a RFC recommended status message for that code. Setting an unsupported HTTP status code will result in an exception
      *
      * @param int $code
+     *
      * @return \Maleficarum\Response\AbstractResponse
      */
-    public function setStatusCode(int $code) : \Maleficarum\Response\AbstractResponse {
+    public function setStatusCode(int $code): \Maleficarum\Response\AbstractResponse {
         $message = \Maleficarum\Response\Http\Status::getMessageForStatus($code);
 
         $this->response->setStatusCode($code, $message);
@@ -155,22 +158,23 @@ class Response extends \Maleficarum\Response\AbstractResponse {
     protected function terminate() {
         exit;
     }
-    
+
     /* ------------------------------------ Class Methods END ------------------------------------------ */
 
     /* ------------------------------------ Setters & Getters START ------------------------------------ */
-    
+
     /**
      * Set handler
      *
      * @param \Maleficarum\Response\Http\Handler\AbstractHandler $handler
+     *
      * @return \Maleficarum\Response\Http\Response
      */
-    public function setHandler(\Maleficarum\Response\Http\Handler\AbstractHandler $handler) : \Maleficarum\Response\Http\Response {
+    public function setHandler(\Maleficarum\Response\Http\Handler\AbstractHandler $handler): \Maleficarum\Response\Http\Response {
         $this->handler = $handler;
 
         return $this;
     }
-    
+
     /* ------------------------------------ Setters & Getters END -------------------------------------- */
 }

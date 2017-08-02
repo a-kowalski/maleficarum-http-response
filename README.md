@@ -1,9 +1,11 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
-## [4.0.0] - 2017-07-28
+## [4.0.0] - 2017-08-01
 ### Changed
 - Replace phalcon template engine with twig
+- Make use of nullable types provided in PHP 7.1 (http://php.net/manual/en/migration71.new-features.php)
+- Fix tests
 
 ## [3.0.0] - 2017-03-23
 ### Changed

@@ -9,29 +9,12 @@ namespace Maleficarum\Response\Http\Tests\Handler;
 
 class JsonHandlerTest extends \PHPUnit\Framework\TestCase
 {
-    /* ------------------------------------ Method: handle START --------------------------------------- */
-    public function testHandleWithoutConfig() {
-        $handler = new \Maleficarum\Response\Http\Handler\JsonHandler();
-        $handler->handle();
-        
-        $body = $this->getProperty($handler, 'body');
-
-        $this->assertEquals(['meta' => ['status' => 'success', 'version' => null], 'data' => []], $body);
-    }
-
+    /* ------------------------------------ Method: getContentType START ------------------------------- */
     /**
      * @dataProvider handleDataProvider
      */
-    public function testHandleWithConfig($data, $meta, $success, $expected) {
-        $config = $this
-            ->getMockBuilder('Maleficarum\Config\AbstractConfig')
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-
-        $this->setProperty($config, 'data', ['global' => ['version' => 1.0]]);
-        
+    public function testHandle($data, $meta, $success, $expected) {
         $handler = new \Maleficarum\Response\Http\Handler\JsonHandler();
-        $handler->setConfig($config);
         $handler->handle($data, $meta, $success);
 
         $body = $this->getProperty($handler, 'body');
@@ -41,53 +24,21 @@ class JsonHandlerTest extends \PHPUnit\Framework\TestCase
 
     public function handleDataProvider() {
         return [
-            [[], [], true, ['meta' => ['status' => 'success', 'version' => 1.0], 'data' => []]],
-            [[], ['bar' => 'baz'], true, ['meta' => ['status' => 'success', 'version' => 1.0, 'bar' => 'baz'], 'data' => []]],
-            [[], [], false, ['meta' => ['status' => 'failure', 'version' => 1.0], 'data' => []]]
+            [[], [], true, ['meta' => ['status' => 'success'], 'data' => []]],
+            [[], ['bar' => 'baz'], true, ['meta' => ['status' => 'success', 'bar' => 'baz'], 'data' => []]],
+            [[], [], false, ['meta' => ['status' => 'failure'], 'data' => []]]
         ];
     }
-    /* ------------------------------------ Method: handle END ----------------------------------------- */
 
-    /* ------------------------------------ Method: getBody START -------------------------------------- */
-    public function testGetBodyWithoutProfiler() {
+    public function testGetBodyWithPlugin() {
         $handler = new \Maleficarum\Response\Http\Handler\JsonHandler();
-        $this->setProperty($handler, 'body', ['foo' => 'bar']);
+        $handler->handle();
 
-        $this->assertSame('{"foo":"bar"}', $handler->getBody());
+        $handler->addPlugin('foo', function (){ return 'bar'; });
+
+        $this->assertEquals('{"meta":{"status":"success","foo":"bar"},"data":[]}', $handler->getBody());
     }
 
-    public function testGetBodyWithProfiler() {
-        $timeProfiler = $this
-            ->getMockBuilder('Maleficarum\Profiler\Time')
-            ->setMethods(['getProfile', 'isComplete'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $timeProfiler
-            ->expects($this->once())
-            ->method('isComplete')
-            ->willReturn(true);
-        $timeProfiler
-            ->expects($this->exactly(3))
-            ->method('getProfile')
-            ->willReturn(10);
-
-        $databaseProfiler = $this
-            ->getMockBuilder('Maleficarum\Profiler\Database')
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-
-        $handler = new \Maleficarum\Response\Http\Handler\JsonHandler();
-        $handler
-            ->addProfiler($timeProfiler, 'time')
-            ->addProfiler($databaseProfiler, 'database');
-
-        $this->setProperty($handler, 'body', ['meta' => []]);
-
-        $this->assertSame('{"meta":{"time_profile":{"exec_time":10,"req_per_s":0.1},"database_profile":{"query_count":0,"overall_query_exec_time":0}}}', $handler->getBody());
-    }
-    /* ------------------------------------ Method: getBody END ---------------------------------------- */
-
-    /* ------------------------------------ Method: getContentType START ------------------------------- */
     public function testGetContentType() {
         $handler = $this
             ->getMockBuilder('Maleficarum\Response\Http\Handler\JsonHandler')
@@ -130,5 +81,4 @@ class JsonHandlerTest extends \PHPUnit\Framework\TestCase
         return $value;
     }
     /* ------------------------------------ Helper methods END ----------------------------------------- */
-
 }

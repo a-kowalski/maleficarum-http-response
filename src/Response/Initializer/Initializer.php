@@ -7,11 +7,12 @@ declare (strict_types=1);
 namespace Maleficarum\Response\Initializer;
 
 class Initializer {
-
     /* ------------------------------------ Class Methods START ---------------------------------------- */
 
     /**
      * This method will initialize the entire package.
+     *
+     * @param array $opts
      *
      * @return string
      */
@@ -106,5 +107,4 @@ class Initializer {
     }
 
     /* ------------------------------------ Class Methods END ------------------------------------------ */
-
 }

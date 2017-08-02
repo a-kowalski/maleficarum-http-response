@@ -21,38 +21,19 @@ class TemplateHandlerTest extends \PHPUnit\Framework\TestCase
 
         $handler->handle();
     }
-    
+
     public function testHandle() {
-        $view = $this
-            ->getMockBuilder('Phalcon\Mvc\ViewBaseInterface')
-            ->setMethods(['getViewsDir'])
-            ->getMockForAbstractClass();
+        $view = $this->createMock('Twig_Environment');
         $view
-            ->expects($this->once())
-            ->method('getViewsDir')
-            ->willReturn('/foo/');
-
-        $volt = $this
-            ->getMockBuilder('Phalcon\Mvc\View\Engine\Volt')
-            ->setMethods(['getView', 'render'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $volt
-            ->expects($this->once())
-            ->method('getView')
-            ->willReturn($view);
-
-        $volt
             ->expects($this->once())
             ->method('render')
             ->with(
-                $this->equalTo('/foo/bar/baz.phtml'),
+                $this->equalTo('bar/baz.html'),
                 $this->equalTo(['foo' => 'bar'])
             )
             ->willReturn('foo');
 
-        $handler = new \Maleficarum\Response\Http\Handler\TemplateHandler($volt);
+        $handler = new \Maleficarum\Response\Http\Handler\TemplateHandler($view);
         $handler->handle('bar/baz', ['foo' => 'bar']);
 
         $this->assertSame('foo', $handler->getBody());
@@ -69,5 +50,4 @@ class TemplateHandlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('text/html', $handler->getContentType());
     }
     /* ------------------------------------ Method: getContentType END --------------------------------- */
-
 }
