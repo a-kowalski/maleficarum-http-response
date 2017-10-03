@@ -41,6 +41,10 @@ class TemplateHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler
             throw new \InvalidArgumentException(sprintf('Invalid template path provided. \%s::handle()', static::class));
         }
 
+        foreach ($this->plugins as $name => $plugin) {
+            $data['meta'][$name] = $plugin();
+        }
+
         // initialize response content
         $this->body = $this->view->render($template . '.html', $data);
 

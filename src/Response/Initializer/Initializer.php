@@ -94,6 +94,17 @@ class Initializer {
                     );
                 }
 
+                //add plugins from config
+                if (isset($dep['Maleficarum\Config']['response']['plugins']) && is_array($dep['Maleficarum\Config']['response']['plugins'])) {
+                    foreach ($dep['Maleficarum\Config']['response']['plugins'] as $plugin) {
+                        $p = \Maleficarum\Ioc\Container::get($plugin);
+                        if (!$p instanceof \Maleficarum\Response\Plugin\AbstractPlugin) {
+                            throw new \LogicException('Invalid plugin type specified.');
+                        }
+                        $responseHandler->addPlugin($p->getName(), $p->getClosure());
+                    }
+                }
+
                 $resp = (new \Maleficarum\Response\Http\Response(new \Phalcon\Http\Response, $responseHandler));
 
                 return $resp;
