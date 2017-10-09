@@ -12,13 +12,13 @@ abstract class AbstractPlugin {
 	 * @return string
 	 * @abstract
 	 */
-	abstract public function getName();
+	abstract public function getName(): string;
 
 
 	/**
 	 * Get closure plugin
-	 * @return mixed 
+	 * @return \Closure
 	 * @abstract
 	 */
-	abstract public function getClosure();
+	abstract public function getClosure(): \Closure;
 }
