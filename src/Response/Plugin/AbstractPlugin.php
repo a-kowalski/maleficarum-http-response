@@ -16,9 +16,9 @@ abstract class AbstractPlugin {
 
 
 	/**
-	 * Get closure plugin
-	 * @return \Closure
-	 * @abstract
+     * Execute plugin logic.
+     * @return mixed
+     * @abstract
 	 */
-	abstract public function getClosure(): \Closure;
+	abstract public function execute();
 }

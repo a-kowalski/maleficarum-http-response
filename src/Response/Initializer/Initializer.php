@@ -52,46 +52,24 @@ class Initializer {
             \Maleficarum\Ioc\Container::register('Maleficarum\Response\Http\Response', function ($dep) use ($responseHandler) {
                 // add version plugin
                 if (isset($dep['Maleficarum\Config'])) {
-                    $version = isset($dep['Maleficarum\Config']['global']['version']) ? $dep['Maleficarum\Config']['global']['version'] : null;
-                    $responseHandler->addPlugin(
-                        'version',
-                        function () use ($version) {
-                            return $version;
-                        }
-                    );
+                    $versionPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\Version');
+                    $responseHandler->addPlugin($versionPlugin->getName(), $versionPlugin->execute());
                 }
 
                 // add profiler plugins on internal envs
                 if (isset($dep['Maleficarum\Environment']) && in_array($dep['Maleficarum\Environment']->getCurrentEnvironment(), ['local', 'development', 'staging'])) {
-                    $profiler = $dep['Maleficarum\Profiler\Time'] ?? null;
-                    is_null($profiler) or $responseHandler->addPlugin(
-                        'time_profiler',
-                        function () use ($profiler) {
-                            $profiler->isComplete() or $profiler->end();
 
-                            return [
-                                'exec_time' => $profiler->getProfile(),
-                                'req_per_s' => $profiler->getProfile() > 0 ? round(1 / $profiler->getProfile(), 2) : 0,
-                            ];
-                        }
-                    );
+                    $profiler = $dep['Maleficarum\Profiler\Time'] ?? null;
+                    if (!is_null($profiler)) {
+                        $timeProfilerPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\TimeProfiler');
+                        $responseHandler->addPlugin($timeProfilerPlugin->getName(), $timeProfilerPlugin->execute());
+                    }
 
                     $profiler = $dep['Maleficarum\Profiler\Database'] ?? null;
-                    is_null($profiler) or $responseHandler->addPlugin(
-                        'database_profiler',
-                        function () use ($profiler) {
-                            $count = $exec = 0;
-                            foreach ($profiler as $key => $profile) {
-                                $count++;
-                                $exec += $profile['execution'];
-                            }
-
-                            return [
-                                'query_count' => $count,
-                                'overall_query_exec_time' => $exec,
-                            ];
-                        }
-                    );
+                    if (!is_null($profiler)) {
+                        $databaseProfilerPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\DatabaseProfiler');
+                        $responseHandler->addPlugin($databaseProfilerPlugin->getName(), $databaseProfilerPlugin->execute());
+                    }
                 }
 
                 //add plugins from config
@@ -101,7 +79,7 @@ class Initializer {
                         if (!$p instanceof \Maleficarum\Response\Plugin\AbstractPlugin) {
                             throw new \LogicException('Invalid plugin type specified.');
                         }
-                        $responseHandler->addPlugin($p->getName(), $p->getClosure());
+                        $responseHandler->addPlugin($p->getName(), $p->execute());
                     }
                 }
 
