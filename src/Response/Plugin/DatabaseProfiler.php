@@ -5,6 +5,11 @@ namespace Maleficarum\Response\Plugin;
 class DatabaseProfiler extends \Maleficarum\Response\Initializer\AbstractPlugin {
 
     /**
+     * @var \Maleficarum\Profiler\Database\Generic $profiler
+     */
+    private $profiler;
+
+    /**
      * Fetch plugin name.
      *
      * @return string
@@ -19,20 +24,28 @@ class DatabaseProfiler extends \Maleficarum\Response\Initializer\AbstractPlugin 
      * @return mixed
      */
     public function execute() {
-        $profiler = \Maleficarum\Ioc\Container::getDependency('Maleficarum\Profiler\Database');
 
-        return
-            function () use ($profiler) {
-                $count = $exec = 0;
-                foreach ($profiler as $key => $profile) {
-                    $count++;
-                    $exec += $profile['execution'];
-                }
+        $count = $exec = 0;
+        foreach ($this->profiler as $key => $profile) {
+            $count++;
+            $exec += $profile['execution'];
+        }
 
-                return [
-                    'query_count' => $count,
-                    'overall_query_exec_time' => $exec,
-                ];
-            };
+        return [
+            'query_count' => $count,
+            'overall_query_exec_time' => $exec,
+        ];
+    }
+
+    /**
+     * @param \Maleficarum\Profiler\Database\Generic $profiler
+     *
+     * @return $this
+     */
+    public function setProfiler(\Maleficarum\Profiler\Database\Generic $profiler) {
+
+        $this->profiler = $profiler;
+
+        return $this;
     }
 }

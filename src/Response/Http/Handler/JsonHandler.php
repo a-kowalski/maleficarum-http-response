@@ -45,8 +45,8 @@ class JsonHandler extends \Maleficarum\Response\Http\Handler\AbstractHandler {
      */
     public function getBody(): ?string {
         isset($this->body['meta']) or $this->body['meta'] = [];
-        foreach ($this->plugins as $name => $plugin) {
-            $this->body['meta'][$name] = $plugin();
+        foreach ($this->plugins as $plugin) {
+            $this->body['meta'][$plugin->getName()] = $plugin->execute();
         }
 
         return json_encode($this->body);

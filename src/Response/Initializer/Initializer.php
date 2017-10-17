@@ -53,7 +53,8 @@ class Initializer {
                 // add version plugin
                 if (isset($dep['Maleficarum\Config'])) {
                     $versionPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\Version');
-                    $responseHandler->addPlugin($versionPlugin->getName(), $versionPlugin->execute());
+                    $versionPlugin->setConfig($dep['Maleficarum\Config']);
+                    $responseHandler->addPlugin($versionPlugin);
                 }
 
                 // add profiler plugins on internal envs
@@ -62,24 +63,25 @@ class Initializer {
                     $profiler = $dep['Maleficarum\Profiler\Time'] ?? null;
                     if (!is_null($profiler)) {
                         $timeProfilerPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\TimeProfiler');
-                        $responseHandler->addPlugin($timeProfilerPlugin->getName(), $timeProfilerPlugin->execute());
+                        $responseHandler->addPlugin($timeProfilerPlugin);
                     }
 
                     $profiler = $dep['Maleficarum\Profiler\Database'] ?? null;
                     if (!is_null($profiler)) {
                         $databaseProfilerPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\DatabaseProfiler');
-                        $responseHandler->addPlugin($databaseProfilerPlugin->getName(), $databaseProfilerPlugin->execute());
+                        $databaseProfilerPlugin->setProfiler($profiler);
+                        $responseHandler->addPlugin($databaseProfilerPlugin);
                     }
                 }
 
                 //add plugins from config
                 if (isset($dep['Maleficarum\Config']['response']['plugins']) && is_array($dep['Maleficarum\Config']['response']['plugins'])) {
-                    foreach ($dep['Maleficarum\Config']['response']['plugins'] as $plugin) {
-                        $p = \Maleficarum\Ioc\Container::get($plugin);
-                        if (!$p instanceof \Maleficarum\Response\Plugin\AbstractPlugin) {
+                    foreach ($dep['Maleficarum\Config']['response']['plugins'] as $pluginClass) {
+                        $plugin = \Maleficarum\Ioc\Container::get($pluginClass);
+                        if (!$plugin instanceof \Maleficarum\Response\Plugin\AbstractPlugin) {
                             throw new \LogicException('Invalid plugin type specified.');
                         }
-                        $responseHandler->addPlugin($p->getName(), $p->execute());
+                        $responseHandler->addPlugin($plugin);
                     }
                 }
 

@@ -6,6 +6,11 @@ namespace Maleficarum\Response\Plugin;
 class Version extends \Maleficarum\Response\Plugin\AbstractPlugin {
 
     /**
+     * @var \Maleficarum\Config\AbstractConfig $config
+     */
+    private $config;
+
+    /**
      * Fetch plugin name.
      *
      * @return string
@@ -20,12 +25,19 @@ class Version extends \Maleficarum\Response\Plugin\AbstractPlugin {
      * @return mixed
      */
     public function execute() {
-        $config = \Maleficarum\Ioc\Container::getDependency('Maleficarum\Config');
-        $version = isset($config['global']['version']) ? $config['global']['version'] : null;
+        $version = isset($this->config['global']['version']) ? $this->config['global']['version'] : null;
 
-        return
-            function () use ($version) {
-                return $version;
-            };
+        return $version;
+    }
+
+    /**
+     * @param \Maleficarum\Config\AbstractConfig $config
+     *
+     * @return $this
+     */
+    public function setConfig(\Maleficarum\Config\AbstractConfig $config) {
+        $this->config = $config;
+
+        return $this;
     }
 }
