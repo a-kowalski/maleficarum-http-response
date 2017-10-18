@@ -2,7 +2,7 @@
 
 namespace Maleficarum\Response\Plugin;
 
-class TimeProfiler extends \Maleficarum\Response\Initializer\AbstractPlugin {
+class TimeProfiler extends \Maleficarum\Response\Plugin\AbstractPlugin {
 
     /**
      * @var \Maleficarum\Profiler\Time $profiler
@@ -24,13 +24,12 @@ class TimeProfiler extends \Maleficarum\Response\Initializer\AbstractPlugin {
      * @return mixed
      */
     public function execute() {
-        $profiler = \Maleficarum\Ioc\Container::getDependency('Maleficarum\Profiler\Time');
 
-        $profiler->isComplete() or $profiler->end();
+        $this->profiler->isComplete() or $this->profiler->end();
 
         return [
-            'exec_time' => $profiler->getProfile(),
-            'req_per_s' => $profiler->getProfile() > 0 ? round(1 / $profiler->getProfile(), 2) : 0,
+            'exec_time' => $this->profiler->getProfile(),
+            'req_per_s' => $this->profiler->getProfile() > 0 ? round(1 / $this->profiler->getProfile(), 2) : 0,
         ];
     }
 

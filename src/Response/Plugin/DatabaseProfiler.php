@@ -2,7 +2,7 @@
 
 namespace Maleficarum\Response\Plugin;
 
-class DatabaseProfiler extends \Maleficarum\Response\Initializer\AbstractPlugin {
+class DatabaseProfiler extends \Maleficarum\Response\Plugin\AbstractPlugin {
 
     /**
      * @var \Maleficarum\Profiler\Database\Generic $profiler
