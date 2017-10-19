@@ -2,9 +2,7 @@
 
 namespace Maleficarum\Response\Plugin;
 
-
 class Version extends \Maleficarum\Response\Plugin\AbstractPlugin {
-
     /**
      * @var \Maleficarum\Config\AbstractConfig $config
      */

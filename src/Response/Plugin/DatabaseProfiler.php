@@ -3,7 +3,6 @@
 namespace Maleficarum\Response\Plugin;
 
 class DatabaseProfiler extends \Maleficarum\Response\Plugin\AbstractPlugin {
-
     /**
      * @var \Maleficarum\Profiler\Database\Generic $profiler
      */
@@ -24,7 +23,6 @@ class DatabaseProfiler extends \Maleficarum\Response\Plugin\AbstractPlugin {
      * @return mixed
      */
     public function execute() {
-
         $count = $exec = 0;
         foreach ($this->profiler as $key => $profile) {
             $count++;
@@ -43,7 +41,6 @@ class DatabaseProfiler extends \Maleficarum\Response\Plugin\AbstractPlugin {
      * @return $this
      */
     public function setProfiler(\Maleficarum\Profiler\Database\Generic $profiler) {
-
         $this->profiler = $profiler;
 
         return $this;

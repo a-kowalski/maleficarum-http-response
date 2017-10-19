@@ -63,6 +63,7 @@ class Initializer {
                     $profiler = $dep['Maleficarum\Profiler\Time'] ?? null;
                     if (!is_null($profiler)) {
                         $timeProfilerPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\TimeProfiler');
+                        $timeProfilerPlugin->setProfiler($profiler);
                         $responseHandler->addPlugin($timeProfilerPlugin);
                     }
 

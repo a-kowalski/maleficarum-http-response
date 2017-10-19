@@ -3,7 +3,6 @@
 namespace Maleficarum\Response\Plugin;
 
 class TimeProfiler extends \Maleficarum\Response\Plugin\AbstractPlugin {
-
     /**
      * @var \Maleficarum\Profiler\Time $profiler
      */
@@ -24,7 +23,6 @@ class TimeProfiler extends \Maleficarum\Response\Plugin\AbstractPlugin {
      * @return mixed
      */
     public function execute() {
-
         $this->profiler->isComplete() or $this->profiler->end();
 
         return [
