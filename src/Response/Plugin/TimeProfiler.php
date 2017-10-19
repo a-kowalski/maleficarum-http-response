@@ -4,7 +4,7 @@ namespace Maleficarum\Response\Plugin;
 
 class TimeProfiler extends \Maleficarum\Response\Plugin\AbstractPlugin {
     /**
-     * @var \Maleficarum\Profiler\Time $profiler
+     * @var \Maleficarum\Profiler\Time\Generic $profiler
      */
     private $profiler;
 
@@ -32,11 +32,11 @@ class TimeProfiler extends \Maleficarum\Response\Plugin\AbstractPlugin {
     }
 
     /**
-     * @param \Maleficarum\Profiler\Time $profiler
+     * @param \Maleficarum\Profiler\Time|\Maleficarum\Profiler\Time\Generic $profiler
      *
      * @return $this
      */
-    public function setProfiler(\Maleficarum\Profiler\Time $profiler) {
+    public function setProfiler(\Maleficarum\Profiler\Time\Generic $profiler) {
         $this->profiler = $profiler;
 
         return $this;
