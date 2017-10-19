@@ -30,13 +30,12 @@ abstract class AbstractHandler {
     /**
      * Add new closure plugin.
      *
-     * @param string $name
-     * @param \Closure $plugin
+     * @param \Closure|\Maleficarum\Response\Plugin\AbstractPlugin $plugin
      *
-     * @return \Maleficarum\Response\Http\Handler\AbstractHandler
+     * @return AbstractHandler
      */
-    public function addPlugin(string $name, \Closure $plugin): \Maleficarum\Response\Http\Handler\AbstractHandler {
-        $this->plugins[$name] = $plugin;
+    public function addPlugin(\Maleficarum\Response\Plugin\AbstractPlugin $plugin): \Maleficarum\Response\Http\Handler\AbstractHandler {
+        $this->plugins[$plugin->getName()] = $plugin;
 
         return $this;
     }
