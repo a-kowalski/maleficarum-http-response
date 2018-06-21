@@ -36,6 +36,12 @@ class Initializer {
                         $twigLoader = new \Twig_Loader_Filesystem($dep['Maleficarum\Config']['templates']['directory']);
                         $twigEnvironment = new \Twig_Environment($twigLoader, $options);
 
+                        if (isset($dep['Maleficarum\Config']['twig_extensions'])) {
+                            foreach($dep['Maleficarum\Config']['twig_extensions'] as $extensionClassName){
+                                $twigEnvironment->addExtension(new $extensionClassName());
+                            }
+                        }
+
                         return new \Maleficarum\Response\Http\Handler\TemplateHandler($twigEnvironment);
                     });
 
