@@ -7,6 +7,8 @@ declare(strict_types = 1);
 
 namespace Maleficarum\Response\Http\Tests\Handler;
 
+use Maleficarum\Response\Plugin\AbstractPlugin;
+
 class JsonHandlerTest extends \PHPUnit\Framework\TestCase
 {
     /* ------------------------------------ Method: getContentType START ------------------------------- */
@@ -34,7 +36,15 @@ class JsonHandlerTest extends \PHPUnit\Framework\TestCase
         $handler = new \Maleficarum\Response\Http\Handler\JsonHandler();
         $handler->handle();
 
-        $handler->addPlugin('foo', function (){ return 'bar'; });
+        $handler->addPlugin(new class extends AbstractPlugin {
+            public function getName(): string {
+                return 'foo';
+            }
+
+            public function execute() {
+                return 'bar';
+            }
+        });
 
         $this->assertEquals('{"meta":{"status":"success","foo":"bar"},"data":[]}', $handler->getBody());
     }
