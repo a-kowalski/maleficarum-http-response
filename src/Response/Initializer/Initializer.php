@@ -27,13 +27,13 @@ class Initializer {
             switch ($handler) {
                 case 'template':
                     $handlerClass .= 'TemplateHandler';
-                    \Maleficarum\Ioc\Container::registerBuilder($handlerClass, function ($shares) {
-                        if (empty($shares['Maleficarum\Config']['templates']['directory'])) {
+                    \Maleficarum\Ioc\Container::registerBuilder($handlerClass, function ($dep) {
+                        if (empty($dep['Maleficarum\Config']['templates']['directory'])) {
                             throw new \RuntimeException('Missing templates path. \Maleficarum\Ioc\Container::get()');
                         }
 
-                        $options = empty($shares['Maleficarum\Config']['templates']['cache_directory']) ? [] : ['cache' => $shares['Maleficarum\Config']['templates']['cache_directory']];
-                        $twigLoader = new \Twig_Loader_Filesystem($shares['Maleficarum\Config']['templates']['directory']);
+                        $options = empty($dep['Maleficarum\Config']['templates']['cache_directory']) ? [] : ['cache' => $dep['Maleficarum\Config']['templates']['cache_directory']];
+                        $twigLoader = new \Twig_Loader_Filesystem($dep['Maleficarum\Config']['templates']['directory']);
                         $twigEnvironment = new \Twig_Environment($twigLoader, $options);
 
                         return new \Maleficarum\Response\Http\Handler\TemplateHandler($twigEnvironment);
@@ -49,25 +49,25 @@ class Initializer {
             /** @var \Maleficarum\Response\Http\Handler\AbstractHandler $responseHandler */
             $responseHandler = \Maleficarum\Ioc\Container::get($handlerClass);
 
-            \Maleficarum\Ioc\Container::registerBuilder('Maleficarum\Response\Http\Response', function ($shares) use ($responseHandler) {
+            \Maleficarum\Ioc\Container::registerBuilder('Maleficarum\Response\Http\Response', function ($dep) use ($responseHandler) {
                 // add version plugin
-                if (isset($shares['Maleficarum\Config'])) {
+                if (isset($dep['Maleficarum\Config'])) {
                     $versionPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\Version');
-                    $versionPlugin->setConfig($shares['Maleficarum\Config']);
+                    $versionPlugin->setConfig($dep['Maleficarum\Config']);
                     $responseHandler->addPlugin($versionPlugin);
                 }
 
                 // add profiler plugins on internal envs
-                if (isset($shares['Maleficarum\Environment']) && in_array($shares['Maleficarum\Environment']->getCurrentEnvironment(), ['local', 'development', 'staging'])) {
+                if (isset($dep['Maleficarum\Environment']) && in_array($dep['Maleficarum\Environment']->getCurrentEnvironment(), ['local', 'development', 'staging'])) {
 
-                    $profiler = $shares['Maleficarum\Profiler\Time'] ?? null;
+                    $profiler = $dep['Maleficarum\Profiler\Time'] ?? null;
                     if (!is_null($profiler)) {
                         $timeProfilerPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\TimeProfiler');
                         $timeProfilerPlugin->setProfiler($profiler);
                         $responseHandler->addPlugin($timeProfilerPlugin);
                     }
 
-                    $profiler = $shares['Maleficarum\Profiler\Database'] ?? null;
+                    $profiler = $dep['Maleficarum\Profiler\Database'] ?? null;
                     if (!is_null($profiler)) {
                         $databaseProfilerPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\DatabaseProfiler');
                         $databaseProfilerPlugin->setProfiler($profiler);
@@ -76,8 +76,8 @@ class Initializer {
                 }
 
                 //add plugins from config
-                if (isset($shares['Maleficarum\Config']['response']['plugins']) && is_array($shares['Maleficarum\Config']['response']['plugins'])) {
-                    foreach ($shares['Maleficarum\Config']['response']['plugins'] as $pluginClass) {
+                if (isset($dep['Maleficarum\Config']['response']['plugins']) && is_array($dep['Maleficarum\Config']['response']['plugins'])) {
+                    foreach ($dep['Maleficarum\Config']['response']['plugins'] as $pluginClass) {
                         $plugin = \Maleficarum\Ioc\Container::get($pluginClass);
                         if (!$plugin instanceof \Maleficarum\Response\Plugin\AbstractPlugin) {
                             throw new \LogicException('Invalid plugin type specified.');
