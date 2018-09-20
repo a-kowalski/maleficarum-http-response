@@ -34,7 +34,15 @@ class JsonHandlerTest extends \PHPUnit\Framework\TestCase
         $handler = new \Maleficarum\Response\Http\Handler\JsonHandler();
         $handler->handle();
 
-        $handler->addPlugin('foo', function (){ return 'bar'; });
+        $handler->addPlugin(new class extends \Maleficarum\Response\Plugin\AbstractPlugin {
+            public function getName(): string {
+                return 'foo';
+            }
+
+            public function execute() {
+                return 'bar';
+            }
+        });
 
         $this->assertEquals('{"meta":{"status":"success","foo":"bar"},"data":[]}', $handler->getBody());
     }

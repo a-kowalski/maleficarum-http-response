@@ -1,6 +1,13 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
+## [5.0.0] - 2018-09-17  
+### Changed  
+- Upgraded IoC component to version 3.x  
+- Upgraded phpunit version  
+- Removed repositories section from composer file
+- Fixed JsonHandlerTest test
+
 ## [4.1.0] - 2017-10-03
 ### Changed
 - Support plugins in template handler 

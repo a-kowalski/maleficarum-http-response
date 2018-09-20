@@ -27,7 +27,7 @@ class Initializer {
             switch ($handler) {
                 case 'template':
                     $handlerClass .= 'TemplateHandler';
-                    \Maleficarum\Ioc\Container::register($handlerClass, function ($dep) {
+                    \Maleficarum\Ioc\Container::registerBuilder($handlerClass, function ($dep) {
                         if (empty($dep['Maleficarum\Config']['templates']['directory'])) {
                             throw new \RuntimeException('Missing templates path. \Maleficarum\Ioc\Container::get()');
                         }
@@ -49,7 +49,7 @@ class Initializer {
             /** @var \Maleficarum\Response\Http\Handler\AbstractHandler $responseHandler */
             $responseHandler = \Maleficarum\Ioc\Container::get($handlerClass);
 
-            \Maleficarum\Ioc\Container::register('Maleficarum\Response\Http\Response', function ($dep) use ($responseHandler) {
+            \Maleficarum\Ioc\Container::registerBuilder('Maleficarum\Response\Http\Response', function ($dep) use ($responseHandler) {
                 // add version plugin
                 if (isset($dep['Maleficarum\Config'])) {
                     $versionPlugin = \Maleficarum\Ioc\Container::get('Maleficarum\Response\Plugin\Version');
@@ -93,7 +93,7 @@ class Initializer {
         }
 
         // load response object
-        \Maleficarum\Ioc\Container::registerDependency('Maleficarum\Response', \Maleficarum\Ioc\Container::get('Maleficarum\Response\Http\Response'));
+        \Maleficarum\Ioc\Container::registerShare('Maleficarum\Response', \Maleficarum\Ioc\Container::get('Maleficarum\Response\Http\Response'));
 
         return __METHOD__;
     }
