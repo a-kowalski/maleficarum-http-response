@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
+## [5.1.0] - 2018-10-16  
+### Changed  
+- Add Twig extensions to TemplateHandler
+
 ## [5.0.0] - 2018-09-17  
 ### Changed  
 - Upgraded IoC component to version 3.x  
