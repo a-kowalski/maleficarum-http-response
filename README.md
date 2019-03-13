@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
+## [5.1.1] - 2019-03-13
+### Changed
+- Bound Twig dependency to 2.6.* (changed from ^2.4) since 2.7 makes and incompatible class change.  
+
 ## [5.1.0] - 2018-10-16  
 ### Changed  
 - Add Twig extensions to TemplateHandler
