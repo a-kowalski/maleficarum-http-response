@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
+## [4.1.1] - 2019-06-14
+### Changed
+- change composer.json file
+
 ## [4.1.0] - 2017-10-03
 ### Changed
 - Support plugins in template handler 
