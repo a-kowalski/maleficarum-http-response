@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
+## [5.1.2] - 2019-06-14
+### Changed
+- Updated README
+
 ## [5.1.1] - 2019-03-13
 ### Changed
 - Bound Twig dependency to 2.6.* (changed from ^2.4) since 2.7 makes and incompatible class change.  
@@ -15,6 +19,10 @@ This is the Maleficarum HTTP response component implementation.
 - Upgraded phpunit version  
 - Removed repositories section from composer file
 - Fixed JsonHandlerTest test
+
+## [4.1.1] - 2019-06-14
+### Changed
+- Changed composer.json file
 
 ## [4.1.0] - 2017-10-03
 ### Changed
