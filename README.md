@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
+## [6.0.0] - 2020-04-29
+### Changed
+- Updated to depend on and work with Phalcon 4.0.X
+
 ## [5.1.2] - 2019-06-14
 ### Changed
 - Updated README
