@@ -269,6 +269,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['setStatusCode'])
             ->disableOriginalConstructor()
             ->getMock();
+
         $phalconResponse
             ->expects($this->exactly(2))
             ->method('setStatusCode')
@@ -276,7 +277,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
                 $this->equalTo(200),
                 $this->isType('string')
             )
-            ->willReturn(true);
+            ->willReturn($phalconResponse);
 
         $response = new \Maleficarum\Response\Http\Response($phalconResponse, $handler);
         $response->setStatusCode(200);

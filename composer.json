@@ -4,7 +4,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.2",
-        "ext-phalcon": "^3.2",
+        "ext-phalcon": "^4.0",
         "maleficarum/ioc": "^3.0",
         "maleficarum/response": "^4.0",
         "twig/twig": "2.6.*"
