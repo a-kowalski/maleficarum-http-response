@@ -1,6 +1,10 @@
 # Change Log
 This is the Maleficarum HTTP response component implementation. 
 
+## [6.0.1] - 2020-05-27
+### Fixed
+- Cast response body to string
+
 ## [6.0.0] - 2020-04-29
 ### Changed
 - Updated to depend on and work with Phalcon 4.0.X

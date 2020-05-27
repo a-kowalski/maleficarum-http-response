@@ -76,7 +76,7 @@ class Response extends \Maleficarum\Response\AbstractResponse {
         // send the response
         $this
             ->response
-            ->setContent($body)
+            ->setContent((string)$body)
             ->send();
 
         return $this;
